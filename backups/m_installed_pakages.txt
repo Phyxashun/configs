@@ -1,0 +1,11 @@
+dgop-bin 0.1.7-1
+dgop-bin-debug 0.1.7-1
+dms-shell-bin 0.1.15-2
+dms-shell-bin-debug 0.1.15-2
+google-breakpad v2024.02.16-2
+liri-cmake-shared-git v1.1.0.r91.ge633ba7-1
+matugen-bin 2.4.1-1
+matugen-bin-debug 2.4.1-1
+paru-debug 2.1.0-1
+python-pywalfox 2.7.4-1
+quickshell 0.2.1-1
