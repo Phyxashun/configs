@@ -1,0 +1,202 @@
+// KDL Syntax Highlighting Test File
+// This file tests all KDL features for syntax highlighting
+
+/* Multi-line block comment
+   can span multiple lines
+   /* and can be nested */
+   still in comment */
+
+// 1. NODES WITH ARGUMENTS
+node-name "string argument" 123 #true #false #null
+simple-node
+node-with-many-args 1 2 3 "four" #true
+
+// 2. PROPERTIES (key=value pairs)
+node-with-props key="value" number=42 flag=#true
+mixed prop1="first" arg1 prop2="second" arg2 prop3=123
+
+// 3. CHILDREN BLOCKS
+parent {
+    child1 "value"
+    child2 key="nested"
+    
+    nested-parent {
+        deeply-nested "works too"
+    }
+}
+
+// Single line children
+compact { child1; child2; child3 }
+
+// 4. STRINGS - Different types
+
+// Regular quoted strings
+quoted "This is a quoted string"
+with-escapes "Line 1\nLine 2\tTabbed"
+unicode "Unicode escape: \u{1F600}"
+
+// Raw strings (no escapes)
+raw-string #"This \n is \t literal"#
+raw-multi ##"Can contain "quotes" and #hashes#"##
+
+// Multi-line strings
+multi-line-string """
+    This is a multi-line string
+    It preserves line breaks
+    And handles indentation
+    """
+
+// 5. NUMBERS - All formats
+
+// Decimal numbers
+decimal-int 42
+decimal-negative -17
+decimal-float 3.14159
+decimal-scientific 6.022e23
+decimal-negative-sci -1.6e-19
+decimal-with-underscores 1_000_000
+
+// Hexadecimal
+hex-number 0xFF
+hex-negative -0xDEADBEEF
+hex-underscores 0xDE_AD_BE_EF
+
+// Octal
+octal-number 0o755
+octal-negative -0o644
+
+// Binary
+binary-number 0b1010
+binary-negative -0b1111_0000
+
+// Special float keywords
+special-floats #inf #-inf #nan
+
+// 6. TYPE ANNOTATIONS
+typed-node (type)value="annotated"
+typed-arg (i32)42 (f64)3.14 (string)"hello"
+(custom-type)node-name arg1="value"
+
+// 7. BOOLEANS AND NULL
+booleans #true #false
+null-value #null
+mixed-values #true #false #null 42 "string"
+
+// 8. SLASHDASH COMMENTS (commented out code)
+
+// Commented out node
+/- hidden-node "this is ignored" key="also ignored"
+
+// Commented out inline value
+visible-node /- "commented" "visible" key=/- "commented" "visible"
+
+// Commented out node with children
+/- commented-parent {
+    "This entire block is commented"
+    nested-child {
+        even-deeper "all ignored"
+    }
+    numbers 123 0xFF #true
+}
+
+// Commented out property
+node /- hidden-key="hidden-value" visible-key="visible-value"
+
+// 9. LINE CONTINUATIONS
+long-node \
+    arg1 \
+    arg2 \
+    key="value"
+
+// 10. COMPLEX REAL-WORLD EXAMPLE (niri-style config)
+output "eDP-1" {
+    mode "1920x1080@60"
+    scale 1.5
+    transform "normal"
+    position x=0 y=0
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+            variant "colemak"
+        }
+        repeat-delay 600
+        repeat-rate 25
+    }
+    
+    touchpad {
+        tap
+        natural-scroll
+        accel-speed 0.2
+    }
+}
+
+binds {
+    // Mod+Q closes window
+    Mod+Q { action "close-window"; }
+    
+    // Mod+T opens terminal  
+    Mod+T { 
+        action "spawn"
+        command "alacritty"
+    }
+}
+
+layout {
+    gaps 16
+    center-focused-column "never"
+    
+    /- commented-option {
+        this "is disabled"
+    }
+    
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+}
+
+// 11. EDGE CASES
+
+// Empty node
+empty
+
+// Node with only properties
+props-only key1="value1" key2="value2"
+
+// Identifiers with special chars
+kebab-case "works"
+snake_case "works"
+with.dots "works"
+with:colons "works"
+
+// Multiple properties with same key (last wins)
+override-test key="first" key="second" key="third"
+
+// Mixed arguments and properties
+mixed-order arg1 key1="prop1" arg2 key2="prop2" arg3
+
+// Type annotations everywhere
+(annotated)typed-node (str)"value" (i32)42 key=(bool)#true
+
+// Comments in various positions
+node1 "value" // end of line comment
+node2 /* inline comment */ "value"
+node3 "value" /* comment */ key="value"
+
+// 12. WHITESPACE VARIATIONS
+compact{child1;child2;child3;}
+spaced     "lots"     of     "spaces"
+	tabbed	"between"	"values"
+
+output "eDP-1" {              // "output" = purple (top-level)
+    mode "1920x1080"          // "mode" = cyan (in block)
+    nested {                  // "nested" = cyan (in block)
+        deeply-nested "x"     // "deeply-nested" = cyan (still in block)
+    }
+}
+
+// End of test file

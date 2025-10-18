@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2009 tm2gtksw2(Alexandre da Silva)
+
+ This file was generated from a textmate theme named Tomorrow Night - Eighties
+ with tm2gtksw2 tool. (Alexandre da Silva)
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+-->
+
+<style-scheme id="tomorrownighteighties" _name="Tomorrow Night - Eighties" kind="dark-only">
+	
+	<!--<author>tm2gtksw2(Alexandre da Silva)</author>-->
+	<_description>GMate Theme - Generated from textmate theme with tm2gtksw2</_description>
+
+	<!-- Tomorrow Night - Eighties - Color Palette -->
+	<color name="dimgray" value="#393939"/>
+	<color name="lightgray" value="#cccccc"/>
+	<color name="darkgray" value="#6a6a6a"/>
+	<color name="gray" value="#515151"/>
+	<color name="darkslategray" value="#2d2d2d"/>
+	<color name="plum" value="#cc99cc"/>
+	<color name="gold" value="#ffcc66"/>
+	<color name="sandybrown" value="#f99157"/>
+	<color name="darkdarkgray" value="#999999"/>
+	<color name="gainsboro" value="#cdcdcd"/>
+	<color name="steelblue" value="#6699cc"/>
+	<color name="lightcoral" value="#f2777a"/>
+	<color name="mediumturquoise" value="#66cccc"/>
+	<color name="darkseagreen" value="#99cc99"/>
+
+
+
+	<style name="current-line" background="dimgray"/>
+	<style name="cursor" foreground="lightgray"/>
+	<style name="draw-spaces" foreground="darkgray"/>
+	<style name="search-match" background="dimgray" bold="true" underline="true"/>
+	<style name="selection" foreground="lightgray" background="gray"/>
+	<style name="text" foreground="lightgray" background="darkslategray"/>	
+	
+	<style name="bracket-match" background="dimgray" bold="true"/>
+	<style name="bracket-mismatch" background="dimgray" underline="true"/>
+	
+	<style name="css:at-rules" foreground="plum"/>
+	<style name="css:color" foreground="lightgray"/>
+	<style name="css:keyword" foreground="gold"/>
+	
+	<style name="def:base-n-integer" foreground="sandybrown"/>
+	<style name="def:boolean" foreground="sandybrown"/>
+	<style name="def:builtin" foreground="sandybrown"/>
+	<style name="def:character" foreground="sandybrown"/>
+	<style name="def:comment" foreground="darkdarkgray"/>
+	<style name="def:complex" foreground="sandybrown"/>
+	<style name="def:decimal" foreground="sandybrown"/>
+	<style name="def:doc-comment" foreground="darkdarkgray"/>
+	<style name="def:doc-comment-element" foreground="darkdarkgray"/>
+	<style name="def:error" foreground="gainsboro" background="lightcoral"/>
+	<style name="def:floating-point" foreground="sandybrown"/>
+	<style name="def:function" foreground="steelblue"/>
+	<style name="def:identifier" foreground="lightcoral"/>
+	<style name="def:keyword" foreground="plum" bold="true"/>
+	<style name="def:note" foreground="darkdarkgray"/>
+	<style name="def:number" foreground="sandybrown"/>
+	<style name="def:operator" foreground="mediumturquoise"/>
+	<style name="def:preprocessor" foreground="sandybrown"/>
+	<style name="def:reserved" foreground="plum"/>
+	<style name="def:shebang" foreground="darkdarkgray"/>
+	<style name="def:special-char" foreground="sandybrown"/>
+	<style name="def:special-constant" foreground="sandybrown"/>
+	<style name="def:statement" foreground="plum"/>
+	<style name="def:string" foreground="darkseagreen"/>
+	<style name="def:type" foreground="gold"/>
+	
+	<style name="html:dtd" foreground="darkseagreen"/>
+	<style name="html:tag" foreground="lightcoral"/>
+	
+	<style name="js:function" foreground="steelblue"/>
+	
+	<style name="line-numbers" foreground="lightgray" background="dimgray"/>
+	
+	<style name="perl:builtin" foreground="steelblue"/>
+	<style name="perl:include-statement" foreground="plum"/>
+	<style name="perl:special-variable" foreground="sandybrown"/>
+	<style name="perl:variable" foreground="lightcoral"/>
+	
+	<style name="php:string" foreground="darkseagreen"/>
+	
+	<style name="python:builtin-constant" foreground="plum"/>
+	<style name="python:builtin-function" foreground="steelblue"/>
+	<style name="python:module-handler" foreground="plum"/>
+	<style name="python:special-variable" foreground="plum"/>
+	
+	<style name="ruby:attribute-definition" foreground="plum"/>
+	<style name="ruby:builtin" foreground="lightcoral"/>
+	<style name="ruby:class-variable" foreground="lightcoral"/>
+	<style name="ruby:constant" foreground="lightcoral"/>
+	<style name="ruby:global-variable" foreground="steelblue"/>
+	<style name="ruby:instance-variable" foreground="lightcoral"/>
+	<style name="ruby:module-handler" foreground="plum"/>
+	<style name="ruby:predefined-variable" foreground="sandybrown"/>
+	<style name="ruby:regex" foreground="darkseagreen"/>
+	<style name="ruby:special-variable" foreground="plum"/>
+	<style name="ruby:symbol" foreground="darkseagreen"/>
+	
+	<style name="rubyonrails:attribute-definition" foreground="plum"/>
+	<style name="rubyonrails:block-parameter" foreground="sandybrown"/>
+	<style name="rubyonrails:builtin" foreground="lightcoral"/>
+	<style name="rubyonrails:class-inherit" foreground="darkseagreen"/>
+	<style name="rubyonrails:class-name" foreground="gold"/>
+	<style name="rubyonrails:class-variable" foreground="lightcoral"/>
+	<style name="rubyonrails:complex-interpolation" foreground="sandybrown"/>
+	<style name="rubyonrails:constant" foreground="lightcoral"/>
+	<style name="rubyonrails:global-variable" foreground="steelblue"/>
+	<style name="rubyonrails:instance-variable" foreground="lightcoral"/>
+	<style name="rubyonrails:module-handler" foreground="plum"/>
+	<style name="rubyonrails:module-name" foreground="gold"/>
+	<style name="rubyonrails:predefined-variable" foreground="sandybrown"/>
+	<style name="rubyonrails:rails" foreground="lightcoral"/>
+	<style name="rubyonrails:regex" foreground="darkseagreen"/>
+	<style name="rubyonrails:simple-interpolation" foreground="sandybrown"/>
+	<style name="rubyonrails:special-variable" foreground="plum"/>
+	<style name="rubyonrails:symbol" foreground="darkseagreen"/>
+	
+	<style name="xml:attribute-name" foreground="lightcoral"/>
+	<style name="xml:doctype" foreground="lightcoral"/>
+	<style name="xml:element-name" foreground="lightcoral"/>
+	<style name="xml:namespace" foreground="lightcoral"/>
+	<style name="xml:tag" foreground="lightcoral"/>
+	
+</style-scheme>

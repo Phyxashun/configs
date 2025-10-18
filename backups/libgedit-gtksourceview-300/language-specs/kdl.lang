@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ This file is part of libgedit-gtksourceview
+
+ Author: Dustin Dew <phyxashun@gmail.com>
+ Copyright (C) 2025 Dustin Dew <phyxashun@gmail.com>
+
+ libgedit-gtksourceview is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ libgedit-gtksourceview is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public License
+ along with this library; if not, see <http://www.gnu.org/licenses/>.
+
+-->
+<language id="kdl" _name="KDL" version="2.0" _section="Markup">
+  <metadata>
+    <property name="mimetypes">text/x-kdl</property>
+    <property name="globs">*.kdl</property>
+    <property name="line-comment-start">//</property>
+    <property name="block-comment-start">/*</property>
+    <property name="block-comment-end">*/</property>
+  </metadata>
+
+  <styles>
+    <style id="comment"           name="Comment"           map-to="def:comment"/>
+    <style id="slashdash"         name="Slashdash Comment" map-to="def:comment"/>
+    <style id="string"            name="String"            map-to="def:string"/>
+    <style id="escape"            name="Escaped Character" map-to="def:special-char"/>
+    <style id="number"            name="Number"            map-to="def:number"/>
+    <style id="boolean"           name="Boolean"           map-to="def:boolean"/>
+    <style id="null"              name="Null Value"        map-to="def:special-constant"/>
+    <style id="float-keyword"     name="Float Keyword"     map-to="def:special-constant"/>
+    <style id="keyword"           name="Keyword"           map-to="def:keyword"/>
+    <style id="node-name"         name="Node Name"         map-to="def:function"/>
+    <style id="child-node"        name="Child Node"        map-to="def:identifier"/>
+    <style id="property-key"      name="Property Key"      map-to="def:constant"/>
+    <style id="type-annotation"   name="Type Annotation"   map-to="def:preprocessor"/>
+  </styles>
+
+  <definitions>
+
+    <!-- Line comments -->
+    <context id="line-comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+      <start>//</start>
+      <include>
+        <context ref="def:in-comment"/>
+      </include>
+    </context>
+
+    <!-- Block comments (can be nested) -->
+    <context id="block-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+      <start>/\*</start>
+      <end>\*/</end>
+      <include>
+        <context ref="block-comment"/>
+        <context ref="def:in-comment"/>
+      </include>
+    </context>
+
+    <!-- Slashdash comments (commented out nodes/values) -->
+    <context id="slashdash-block" style-ref="slashdash" class="comment" class-disabled="no-spell-check">
+      <start>/-[^{]*\{</start>
+      <end>\}</end>
+      <include>
+        <context ref="slashdash-block"/>
+      </include>
+    </context>
+
+    <context id="slashdash-node-line" style-ref="slashdash" class="comment" class-disabled="no-spell-check" end-at-line-end="true">
+      <start>^\s*/-</start>
+      <include>
+        <context ref="def:in-comment"/>
+      </include>
+    </context>
+
+    <context id="slashdash-inline" style-ref="slashdash" class="comment">
+      <match>/-\s*[^\s{;]+</match>
+    </context>
+
+    <!-- String escape sequences -->
+    <context id="string-escape" style-ref="escape">
+      <match>\\([nrtbfs\\"]|u\{[0-9a-fA-F]{1,6}\})</match>
+    </context>
+
+    <!-- Escaped whitespace in strings -->
+    <context id="ws-escape" style-ref="escape">
+      <match>\\\s+</match>
+    </context>
+
+    <!-- Raw strings r#"..."# or r##"..."## etc -->
+    <context id="raw-string" style-ref="string" class="string" class-disabled="no-spell-check">
+      <start>(#+)"</start>
+      <end>"\%{1@start}</end>
+    </context>
+
+    <!-- Multi-line strings """...""" -->
+    <context id="string-multi-line" style-ref="string" class="string" class-disabled="no-spell-check">
+      <start>"""</start>
+      <end>"""</end>
+      <include>
+        <context ref="string-escape"/>
+        <context ref="ws-escape"/>
+      </include>
+    </context>
+
+    <!-- Regular strings "..." -->
+    <context id="string-single-line" style-ref="string" class="string" class-disabled="no-spell-check">
+      <start>"</start>
+      <end>"</end>
+      <include>
+        <context ref="string-escape"/>
+        <context ref="ws-escape"/>
+      </include>
+    </context>
+
+    <!-- Type annotations (type)value -->
+    <context id="type-annotation" style-ref="type-annotation">
+      <match>\([a-zA-Z][a-zA-Z0-9_-]*\)</match>
+    </context>
+
+    <!-- Float keywords -->
+    <context id="float-keyword" style-ref="float-keyword">
+      <match>#(nan|inf|-inf)</match>
+    </context>
+
+    <!-- Null -->
+    <context id="null" style-ref="null">
+      <match>#null</match>
+    </context>
+
+    <!-- Booleans -->
+    <context id="boolean" style-ref="boolean">
+      <match>#(true|false)</match>
+    </context>
+
+    <!-- Numbers - floats with fraction -->
+    <context id="float-fraction" style-ref="number">
+      <match>\b[0-9+-][0-9_]*\.[0-9][0-9_]*([eE][+-]?[0-9_]+)?\b</match>
+    </context>
+
+    <!-- Numbers - floats with exponent -->
+    <context id="float-exp" style-ref="number">
+      <match>\b[0-9][0-9_]*(\.[0-9][0-9_]*)?[eE][+-]?[0-9_]+\b</match>
+    </context>
+
+    <!-- Numbers - hexadecimal -->
+    <context id="hexadecimal" style-ref="number">
+      <match>\b0x[0-9a-fA-F][0-9a-fA-F_]*\b</match>
+    </context>
+
+    <!-- Numbers - octal -->
+    <context id="octal" style-ref="number">
+      <match>\b0o[0-7][0-7_]*\b</match>
+    </context>
+
+    <!-- Numbers - binary -->
+    <context id="binary" style-ref="number">
+      <match>\b0b[01][01_]*\b</match>
+    </context>
+
+    <!-- Numbers - decimal -->
+    <context id="decimal" style-ref="number">
+      <match>\b[0-9+-][0-9_]*\b</match>
+    </context>
+
+    <!-- Niri configuration keywords (top-level nodes) -->
+    <context id="niri-keywords" style-ref="keyword">
+      <prefix>^[ \t]*</prefix>
+      <suffix>(?=[\s{;]|$|//|/\*)</suffix>
+      <keyword>input</keyword>
+      <keyword>output</keyword>
+      <keyword>binds</keyword>
+      <keyword>switch-events</keyword>
+      <keyword>layout</keyword>
+      <keyword>window-rule</keyword>
+      <keyword>layer-rule</keyword>
+      <keyword>animations</keyword>
+      <keyword>gestures</keyword>
+      <keyword>debug</keyword>
+      <keyword>prefer-no-csd</keyword>
+      <keyword>hotkey-overlay</keyword>
+      <keyword>environment</keyword>
+      <keyword>cursor</keyword>
+      <keyword>screenshot-path</keyword>
+      <keyword>spawn-at-startup</keyword>
+    </context>
+
+    <!-- Children block context -->
+    <context id="children-block">
+      <start>\{</start>
+      <end>\}</end>
+      <include>
+        <context ref="slashdash-block"/>
+        <context ref="slashdash-node-line"/>
+        <context ref="slashdash-inline"/>
+        <context ref="line-comment"/>
+        <context ref="block-comment"/>
+        <context ref="raw-string"/>
+        <context ref="string-multi-line"/>
+        <context ref="string-single-line"/>
+        <context ref="type-annotation"/>
+        <context ref="float-keyword"/>
+        <context ref="null"/>
+        <context ref="boolean"/>
+        <context ref="float-fraction"/>
+        <context ref="float-exp"/>
+        <context ref="hexadecimal"/>
+        <context ref="octal"/>
+        <context ref="binary"/>
+        <context ref="decimal"/>
+        <context ref="property-key"/>
+        <context ref="child-node-name"/>
+        <context ref="children-block"/>
+      </include>
+    </context>
+
+    <!-- Property keys (key=value) -->
+    <context id="property-key" style-ref="property-key">
+      <match>[&lt;&gt;:\w\-_~,'`!?@$%^&amp;*+|.()\[\]]+\d*[&lt;&gt;:\w\-_~,'`!?@$%^&amp;*+|.()\[\]]*(?=\s*=)</match>
+    </context>
+
+    <!-- Top-level node names (only at document root) -->
+    <context id="node-name" style-ref="node-name">
+      <match>^[ \t]*[&lt;&gt;:\w\-_~,'`!?@$%^&amp;*+|.()\[\]]+\d*[&lt;&gt;:\w\-_~,'`!?@$%^&amp;*+|.()\[\]]*(?=[\s{;]|$|//|/\*)</match>
+    </context>
+
+    <!-- Child node names (inside braces, any position) -->
+    <context id="child-node-name" style-ref="child-node">
+      <match>^[ \t]*[&lt;&gt;:\w\-_~,'`!?@$%^&amp;*+|.()\[\]]+\d*[&lt;&gt;:\w\-_~,'`!?@$%^&amp;*+|.()\[\]]*(?=[\s{;]|$|//|/\*)</match>
+    </context>
+
+    <!-- Main context -->
+    <context id="kdl" class="no-spell-check">
+      <include>
+        <context ref="slashdash-block"/>
+        <context ref="slashdash-node-line"/>
+        <context ref="slashdash-inline"/>
+        <context ref="line-comment"/>
+        <context ref="block-comment"/>
+        <context ref="children-block"/>
+        <context ref="raw-string"/>
+        <context ref="string-multi-line"/>
+        <context ref="string-single-line"/>
+        <context ref="type-annotation"/>
+        <context ref="float-keyword"/>
+        <context ref="null"/>
+        <context ref="boolean"/>
+        <context ref="float-fraction"/>
+        <context ref="float-exp"/>
+        <context ref="hexadecimal"/>
+        <context ref="octal"/>
+        <context ref="binary"/>
+        <context ref="decimal"/>
+        <context ref="property-key"/>
+        <context ref="niri-keywords"/>
+        <context ref="node-name"/>
+      </include>
+    </context>
+
+  </definitions>
+</language>

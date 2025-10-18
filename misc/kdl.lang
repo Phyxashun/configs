@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<_schema>https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json</_schema>
+<comment>Some of these patterns are taken straight from rust-analyzer: https://github.com/rust-lang/vscode-rust/blob/master/rust-analyzer/editors/code/rust.tmGrammar.json. Some was also taken from https://github.com/arm32x/vscode-sdlang/blob/master/syntaxes/sdlang.tmLanguage.json</comment>
+<name>kdl</name>
+<patterns>
+    <include>#forbidden_ident</include>
+</patterns>
+<patterns>
+    <include>#null</include>
+</patterns>
+<patterns>
+    <include>#boolean</include>
+</patterns>
+<patterns>
+    <include>#float_keyword</include>
+</patterns>
+<patterns>
+    <include>#float_fraction</include>
+</patterns>
+<patterns>
+    <include>#float_exp</include>
+</patterns>
+<patterns>
+    <include>#decimal</include>
+</patterns>
+<patterns>
+    <include>#hexadecimal</include>
+</patterns>
+<patterns>
+    <include>#octal</include>
+</patterns>
+<patterns>
+    <include>#binary</include>
+</patterns>
+<patterns>
+    <include>#raw-string</include>
+</patterns>
+<patterns>
+    <include>#string_multi_line</include>
+</patterns>
+<patterns>
+    <include>#string_single_line</include>
+</patterns>
+<patterns>
+    <include>#block_comment</include>
+</patterns>
+<patterns>
+    <include>#block_doc_comment</include>
+</patterns>
+<patterns>
+    <include>#slashdash_block_comment</include>
+</patterns>
+<patterns>
+    <include>#slashdash_comment</include>
+</patterns>
+<patterns>
+    <include>#slashdash_node_comment</include>
+</patterns>
+<patterns>
+    <include>#slashdash_node_with_children_comment</include>
+</patterns>
+<patterns>
+    <include>#line_comment</include>
+</patterns>
+<patterns>
+    <include>#attribute</include>
+</patterns>
+<patterns>
+    <include>#node_name</include>
+</patterns>
+<patterns>
+    <include>#ident_string</include>
+</patterns>
+<repository>
+    <float_fraction>
+        <comment>Floating point literal (fraction)</comment>
+        <name>constant.numeric.float.rust</name>
+        <match>([0-9\-\+]|\-|\+)[0-9_]*\.[0-9][0-9_]*([eE][+-]?[0-9_]+)?</match>
+    </float_fraction>
+    <float_exp>
+        <comment>Floating point literal (exponent)</comment>
+        <name>constant.numeric.float.rust</name>
+        <match>[0-9][0-9_]*(\.[0-9][0-9_]*)?[eE][+-]?[0-9_]+</match>
+    </float_exp>
+    <decimal>
+        <comment>Integer literal (decimal)</comment>
+        <name>constant.numeric.integer.decimal.rust</name>
+        <match>[0-9\-\+][0-9_]*</match>
+    </decimal>
+    <hexadecimal>
+        <comment>Integer literal (hexadecimal)</comment>
+        <name>constant.numeric.integer.hexadecimal.rust</name>
+        <match>0x[a-fA-F0-9][a-fA-F0-9_]*</match>
+    </hexadecimal>
+    <octal>
+        <comment>Integer literal (octal)</comment>
+        <name>constant.numeric.integer.octal.rust</name>
+        <match>0o[0-7][0-7_]*</match>
+    </octal>
+    <binary>
+        <comment>Integer literal (binary)</comment>
+        <name>constant.numeric.integer.binary.rust</name>
+        <match>0b[01][01_]*</match>
+    </binary>
+    <forbidden_ident>
+        <name>invalid.illegal.kdl.bad-ident</name>
+        <match>(?
+            <!#)(?:true|false|null|nan|[-]?inf)</match></forbidden_ident><node_name><name>entity.name.tag</name><match>((?<={|;)|^)\s*(?![/\\{\}#;\[\]\=])[<>:\w\-_~,'`!\?@\$%^&*+|.\(\)]+\d*[<>:\w\-_~,'`!\?@\$%^&*+|.\(\)]*</match></node_name><attribute><name>entity.other.attribute-name.kdl</name><match>(?![/\\{\}#;\[\]\=])[<>:\w\-_~,'`!\?@\$%^&*+|.\(\)]+\d*[<>:\w\-_~,'`!\?@\$%^&*+|.\(\)]*(=)</match><captures><1><name>punctuation.separator.key-value.kdl</name></1></captures></attribute><ident_string><name>string.unquoted</name><match>(?![/\\{\}#;\[\]\=])[<>:\w\-_~,'`!\?@\$%^&*+|.\(\)]+\d*[<>:\w\-_~,'`!\?@\$%^&*+|.\(\)]*</match></ident_string><float_keyword><name>constant.language.other.kdl</name><match>#nan|#inf|#-inf</match></float_keyword><null><name>constant.language.null.kdl</name><match>#null</match></null><boolean><name>constant.language.boolean.kdl</name><match>#true|#false</match></boolean><string_single_line><name>string.quoted.double.kdl</name><begin>"</begin><end>"</end><patterns><name>constant.character.escape.kdl</name><match>\\(:?[nrtbfs\\"]|u\{[a-fA-F0-9]{1,6}\})</match></patterns></string_single_line><string_multi_line><name>string.quoted.triple.kdl</name><begin>"""</begin><end>"""</end><patterns><name>constant.character.escape.kdl</name><match>\\(:?[nrtbfs\\"]|u\{[a-fA-F0-9]{1,6}\})</match></patterns></string_multi_line><raw-string><name>string.quoted.other.raw.kdl</name><begin>(#+)("""|")</begin><end>\2\1</end></raw-string><block_doc_comment><comment>Block documentation comment</comment><name>comment.block.documentation.kdl</name><begin>/\*[\*!](?![\*/])</begin><end>\*/</end><patterns><include>#block_doc_comment</include></patterns><patterns><include>#block_comment</include></patterns></block_doc_comment><block_comment><comment>Block comment</comment><name>comment.block.kdl</name><begin>/\*</begin><end>\*/</end><patterns><include>#block_doc_comment</include></patterns><patterns><include>#block_comment</include></patterns></block_comment><line_comment><comment>Single-line comment</comment><name>comment.line.double-slash.kdl</name><begin>//</begin><end>$</end></line_comment><slashdash_comment><name>comment.block.slashdash.kdl</name><comment>Slashdash inline comment</comment><begin>(?
+            <!^)\s*/-\s*</begin><end>\s</end></slashdash_comment><slashdash_node_comment><name>comment.block.slashdash.kdl</name><comment>Slashdash node comment</comment><begin>(?<=^)\s*/-[^{]+$</begin><end>(?:;|(?
+            <!\\)$)</end></slashdash_node_comment><slashdash_node_with_children_comment><name>comment.block.slashdash.kdl</name><comment>Slashdash node comment</comment><begin>(?<=^)\s*/-[^{]+{</begin><end>\}</end></slashdash_node_with_children_comment><slashdash_block_comment><name>comment.block.slashdash.kdl</name><comment>Slashdash block comment</comment><begin>/-\s*{</begin><end>\}</end></slashdash_block_comment></repository><scopeName>source.kdl</scopeName>
+
